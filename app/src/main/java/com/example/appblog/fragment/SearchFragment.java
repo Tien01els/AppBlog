@@ -80,7 +80,7 @@ public class SearchFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    User user = snapshot.getValue(User.class);
+                    User user = dataSnapshot.getValue(User.class);
                     mUsers.add(user);
                 }
                 userAdapter.notifyDataSetChanged();
@@ -102,7 +102,7 @@ public class SearchFragment extends Fragment {
                 if (search_bar.getText().toString().equals("")) {
                     mUsers.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
+                        User user = dataSnapshot.getValue(User.class);
                         mUsers.add(user);
                     }
                 }

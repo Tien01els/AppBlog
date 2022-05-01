@@ -59,6 +59,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         Glide.with(mContext).load(user.getImageurl()).into(holder.image_profile);
         isFollowing(user.getId(), holder.btn_follow);
 
+        String a = firebaseUser.getUid();
+        String b = user.getId();
         if (user.getId().equals(firebaseUser.getUid())) {
             holder.btn_follow.setVisibility(View.GONE);
         }
@@ -70,7 +72,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 editor.putString("profileid", user.getId());
                 editor.apply();
 
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
             }
         });
@@ -115,17 +117,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     private void isFollowing(String userid, Button button) {
+
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Follow").child(firebaseUser.getUid()).child("following");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(userid).exists()){
-                    button.setText("following");
-                }
-                else
-                {
-                    button.setText("follow");
+                if (userid != null) {
+                    if (snapshot.child(userid).exists()){
+                        button.setText("following");
+                    }
+                    else
+                    {
+                        button.setText("follow");
+                    }
                 }
             }
 
