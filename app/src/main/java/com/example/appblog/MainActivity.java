@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.appblog.fragment.HomeFragment;
 import com.example.appblog.fragment.NotificationFragment;
@@ -16,12 +17,13 @@ import com.example.appblog.fragment.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    FirebaseUser firebaseUser;
     BottomNavigationView bottomNavigationView;
     Fragment selectedFragment = null;
 
@@ -29,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        String uid= firebaseUser.getUid();
+        Toast.makeText(this, "Id is "+uid, Toast.LENGTH_LONG).show();
+
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
