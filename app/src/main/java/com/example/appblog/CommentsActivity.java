@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.appblog.adapter.CommentAdapter;
+import com.example.appblog.model.Comment;
 import com.example.appblog.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,8 +31,8 @@ import java.util.List;
 
 public class CommentsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    //private CommentAdapter commentAdapter;
-    //private List<Comment> commentList;
+    private CommentAdapter commentAdapter;
+    private List<Comment> commentList;
 
     EditText addComment;
     ImageView imageProfile;
@@ -64,9 +66,9 @@ public class CommentsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        //commentList = new ArrayList<>();
-        //commentAdapter = new CommentAdapter(this, commentList, postId);
-        //recyclerView.setAdapter(commentAdapter);
+        commentList = new ArrayList<>();
+        commentAdapter = new CommentAdapter(this, commentList, postId);
+        recyclerView.setAdapter(commentAdapter);
 
         post = findViewById(R.id.post);
         addComment = findViewById(R.id.add_comment);
@@ -86,6 +88,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
 
         getImage();
+        readComments();
     }
 
     private void addComment(){
@@ -129,6 +132,25 @@ public class CommentsActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+        });
+    }
+
+    private void readComments(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                commentList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Comment comment = snapshot.getValue(Comment.class);
+                    commentList.add(comment);
+                }
+                commentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 }
