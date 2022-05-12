@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-anydpi/button_black.xml" value="0.1375" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.1615" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-anydpi/ic_heart.xml" value="0.1" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-anydpi/ic_home.xml" value="0.1" />
+        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-anydpi/ic_save.xml" value="0.1375" />
+        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-anydpi/ic_save_black.xml" value="0.1375" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1615" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable/button_background.xml" value="0.1615" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1615" />
@@ -16,11 +19,13 @@
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/activity_start.xml" value="0.1" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/comment_item.xml" value="0.184375" />
+        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/fotos_item.xml" value="0.184375" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
-        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/fragment_profile.xml" value="0.16666666666666666" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/fragment_search.xml" value="0.21388888888888888" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/post_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/progress_dialog_layout.xml" value="0.184375" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/layout/user_item.xml" value="0.16875" />
         <entry key="..\:/HK2_2022/LapTrinhMobile/FinalProjectAndroid/AppBlog/app/src/main/res/menu/bottom_navigation.xml" value="0.1515625" />
       </map>
