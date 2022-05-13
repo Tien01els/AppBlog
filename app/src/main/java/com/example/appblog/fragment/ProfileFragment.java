@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.appblog.EditProfileActivity;
+import com.example.appblog.FollowersActivity;
 import com.example.appblog.R;
 import com.example.appblog.adapter.MyFotoAdapter;
 import com.example.appblog.model.Post;
@@ -198,7 +199,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void userInfo(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(profileId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -227,7 +228,7 @@ public class ProfileFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(profileid).exists()){
+                if (dataSnapshot.child(profileId).exists()){
                     edit_profile.setText("following");
                 } else{
                     edit_profile.setText("follow");
@@ -242,7 +243,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getFollowers(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow").child(profileid).child("followers");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow").child(profileId).child("followers");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -255,7 +256,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Follow").child(profileid).child("following");
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Follow").child(profileId).child("following");
         reference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -277,7 +278,7 @@ public class ProfileFragment extends Fragment {
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Post post = snapshot.getValue(Post.class);
-                    if (post.getPublisher().equals(profileid)){
+                    if (post.getPublisher().equals(profileId)){
                         i++;
                     }
                 }
@@ -299,7 +300,7 @@ public class ProfileFragment extends Fragment {
                 postList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Post post = snapshot.getValue(Post.class);
-                    if (post.getPublisher().equals(profileid)){
+                    if (post.getPublisher().equals(profileId)){
                         postList.add(post);
                     }
                 }

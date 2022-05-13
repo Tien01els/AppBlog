@@ -1,6 +1,7 @@
 package com.example.appblog.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.appblog.MainActivity;
 import com.example.appblog.R;
 import com.example.appblog.fragment.ProfileFragment;
 import com.example.appblog.model.User;
@@ -32,12 +34,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context mContext;
     private List<User> mUsers;
+    private boolean isFragment;
 
     private FirebaseUser firebaseUser;
 
-    public UserAdapter(Context mContext, List<User> mUsers) {
+    public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment) {
         this.mContext = mContext;
         this.mUsers = mUsers;
+        this.isFragment = isFragment;
     }
 
     @NonNull
@@ -69,12 +73,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREPS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileid", user.getId());
-                editor.apply();
+                if (isFragment) {
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREPS", Context.MODE_PRIVATE).edit();
+                    editor.putString("profileId", user.getId());
+                    editor.apply();
 
-                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new ProfileFragment()).commit();
+                } else {
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("publisherId", user.getId());
+                    mContext.startActivity(intent);
+                }
             }
         });
 
@@ -130,7 +140,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
     }
 
-    private void isFollowing(String userid, Button button) {
+    private void isFollowing(String userId, Button button) {
 
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -139,8 +149,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (userid != null) {
-                    if (snapshot.child(userid).exists()){
+                if (userId != null) {
+                    if (snapshot.child(userId).exists()){
                         button.setText("following");
                     }
                     else

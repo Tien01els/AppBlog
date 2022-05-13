@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.appblog.CommentsActivity;
+import com.example.appblog.FollowersActivity;
 import com.example.appblog.R;
 import com.example.appblog.fragment.PostDetailFragment;
 import com.example.appblog.fragment.ProfileFragment;
@@ -134,6 +135,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostId())
                             .child(firebaseUser.getUid()).removeValue();
                 }
+            }
+        });
+
+        holder.likes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, FollowersActivity.class);
+                intent.putExtra("id", post.getPostId());
+                intent.putExtra("title", "likes");
+                mContext.startActivity(intent);
             }
         });
 
