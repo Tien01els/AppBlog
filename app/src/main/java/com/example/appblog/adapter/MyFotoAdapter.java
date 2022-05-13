@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appblog.R;
+import com.example.appblog.fragment.PostDetailFragment;
 import com.example.appblog.model.Post;
 
 import java.util.List;
