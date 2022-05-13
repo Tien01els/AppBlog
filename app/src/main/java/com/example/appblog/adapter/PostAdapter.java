@@ -61,7 +61,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final Post post = mPosts.get(position);
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.post_image);
+        Glide.with(mContext).load(post.getPostImage())
+                .apply(new RequestOptions().placeholder(R.drawable.placeholder)).into(holder.post_image);
 
         if (post.getDescription().equals("")){
             holder.description.setVisibility(View.GONE);

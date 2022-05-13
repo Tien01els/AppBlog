@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.appblog.EditProfileActivity;
 import com.example.appblog.FollowersActivity;
+import com.example.appblog.OptionsActivity;
 import com.example.appblog.R;
 import com.example.appblog.adapter.MyFotoAdapter;
 import com.example.appblog.model.Post;
