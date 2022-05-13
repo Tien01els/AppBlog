@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.appblog.EditProfileActivity;
 import com.example.appblog.R;
 import com.example.appblog.adapter.MyFotoAdapter;
 import com.example.appblog.model.Post;
@@ -34,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -45,7 +47,7 @@ public class ProfileFragment extends Fragment {
     private List<String> mySaves;
 
     FirebaseUser firebaseUser;
-    String profileid;
+    String profileId;
 
     private RecyclerView recyclerView;
     private MyFotoAdapter myFotoAdapter;
@@ -65,7 +67,7 @@ public class ProfileFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         SharedPreferences prefs = getContext().getSharedPreferences("PREFS", MODE_PRIVATE);
-        profileid = prefs.getString("profileid", "none");
+        profileId = prefs.getString("profileId", "none");
 
         image_profile = view.findViewById(R.id.image_profile);
         posts = view.findViewById(R.id.posts);
@@ -104,7 +106,7 @@ public class ProfileFragment extends Fragment {
         myFotos();
         mySaves();
 
-        if (profileid.equals(firebaseUser.getUid())){
+        if (profileId.equals(firebaseUser.getUid())){
             edit_profile.setText("Edit Profile");
         } else {
             checkFollow();
@@ -117,21 +119,19 @@ public class ProfileFragment extends Fragment {
                 String btn = edit_profile.getText().toString();
 
                 if (btn.equals("Edit Profile")){
-
-                    //startActivity(new Intent(getContext(), EditProfileActivity.class));
-
+                    startActivity(new Intent(getContext(), EditProfileActivity.class));
                 } else if (btn.equals("follow")){
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
-                            .child("following").child(profileid).setValue(true);
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
+                            .child("following").child(profileId).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId)
                             .child("followers").child(firebaseUser.getUid()).setValue(true);
-                    //addNotification();
+                    addNotification();
                 } else if (btn.equals("following")){
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
-                            .child("following").child(profileid).removeValue();
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
+                            .child("following").child(profileId).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId)
                             .child("followers").child(firebaseUser.getUid()).removeValue();
 
                 }
@@ -166,7 +166,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("id", profileid);
+                intent.putExtra("id", profileId);
                 intent.putExtra("title", "followers");
                 startActivity(intent);
             }
@@ -176,13 +176,25 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("id", profileid);
+                intent.putExtra("id", profileId);
                 intent.putExtra("title", "following");
                 startActivity(intent);
             }
         });
 
         return view;
+    }
+
+    private void addNotification(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileId);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("text", "Started following you");
+        hashMap.put("postId", "");
+        hashMap.put("isPost", false);
+
+        reference.push().setValue(hashMap);
     }
 
     private void userInfo(){

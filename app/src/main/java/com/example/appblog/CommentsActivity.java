@@ -112,7 +112,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userId", firebaseUser.getUid());
-        hashMap.put("text", "commented: "+ addComment.getText().toString());
+        hashMap.put("text", "Commented: "+ addComment.getText().toString());
         hashMap.put("postId", postId);
         hashMap.put("isPost", true);
 

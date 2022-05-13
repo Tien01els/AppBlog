@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -23,6 +24,8 @@ import com.example.appblog.fragment.PostDetailFragment;
 import com.example.appblog.fragment.ProfileFragment;
 import com.example.appblog.model.Post;
 import com.example.appblog.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
@@ -111,7 +115,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                editor.putString("postid", post.getPostId());
+                editor.putString("postId", post.getPostId());
                 editor.apply();
 
                 ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -125,7 +129,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if (holder.like.getTag().equals("like")) {
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostId())
                             .child(firebaseUser.getUid()).setValue(true);
-                    //addNotification(post.getPublisher(), post.getPostId());
+                    addNotification(post.getPublisher(), post.getPostId());
                 } else {
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostId())
                             .child(firebaseUser.getUid()).removeValue();
@@ -150,8 +154,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CommentsActivity.class);
-                intent.putExtra("postid", post.getPostId());
-                intent.putExtra("publisherid", post.getPublisher());
+                intent.putExtra("postId", post.getPostId());
+                intent.putExtra("publisherId", post.getPublisher());
                 mContext.startActivity(intent);
             }
         });
@@ -160,8 +164,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CommentsActivity.class);
-                intent.putExtra("postid", post.getPostId());
-                intent.putExtra("publisherid", post.getPublisher());
+                intent.putExtra("postId", post.getPostId());
+                intent.putExtra("publisherId", post.getPublisher());
                 mContext.startActivity(intent);
             }
         });
@@ -289,6 +293,42 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 }
             }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void addNotification(String userId, String postId){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userId);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("text", "Liked your post");
+        hashMap.put("postId", postId);
+        hashMap.put("isPost", true);
+
+        reference.push().setValue(hashMap);
+    }
+
+    private void deleteNotifications(final String postId, String userId){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if (snapshot.child("postId").getValue().equals(postId)){
+                        snapshot.getRef().removeValue()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                }
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
