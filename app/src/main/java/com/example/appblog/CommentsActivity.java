@@ -125,7 +125,7 @@ public class CommentsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Glide.with(getApplicationContext()).load(user.getImageurl()).into(imageProfile);
+                Glide.with(getApplicationContext()).load(user.getImageUrl()).into(imageProfile);
             }
 
             @Override

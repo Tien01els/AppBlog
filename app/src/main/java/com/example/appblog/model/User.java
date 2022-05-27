@@ -4,16 +4,16 @@ public class User {
     private String id;
     private String username;
     private String fullname;
-    private String imageurl;
+    private String imageUrl;
     private String bio;
 
     public User() {}
 
-    public User(String id, String username, String fullname, String imageurl, String bio) {
+    public User(String id, String username, String fullname, String imageUrl, String bio) {
         this.id = id;
         this.username = username;
         this.fullname = fullname;
-        this.imageurl = imageurl;
+        this.imageUrl = imageUrl;
         this.bio = bio;
     }
 
@@ -41,12 +41,12 @@ public class User {
         this.fullname = fullname;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
+    public void setImageUrl(String imageurl) {
+        this.imageUrl = imageurl;
     }
 
     public String getBio() {
