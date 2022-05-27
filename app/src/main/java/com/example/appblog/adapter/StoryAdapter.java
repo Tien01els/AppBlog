@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.appblog.AddStoryActivity;
 import com.example.appblog.R;
+import com.example.appblog.StoryActivity;
 import com.example.appblog.model.Story;
 import com.example.appblog.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -137,7 +138,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                 long timecurrent = System.currentTimeMillis();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Story story = snapshot.getValue(Story.class);
-                    if (timecurrent > story.getTimestart() && timecurrent < story.getTimeEnd()) {
+                    if (timecurrent > story.getTimeStart() && timecurrent < story.getTimeEnd()) {
                         count++;
                     }
                 }
@@ -196,7 +197,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (!snapshot.child("views")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .exists() && System.currentTimeMillis() < snapshot.getValue(Story.class).getTimeend()) {
+                            .exists() && System.currentTimeMillis() < snapshot.getValue(Story.class).getTimeEnd()) {
                         i++;
                     }
                 }
