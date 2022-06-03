@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBlog">
         <activity
+            android:name=".activities.UsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HomeChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".StoryActivity"
             android:exported="false" />
         <activity
@@ -57,10 +63,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
     </application>
 

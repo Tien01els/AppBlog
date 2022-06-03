@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        String uid= firebaseUser.getUid();
-        Toast.makeText(this, "Id is "+uid, Toast.LENGTH_LONG).show();
+//        String uid= firebaseUser.getUid();
+//        Toast.makeText(this, "Id is "+uid, Toast.LENGTH_LONG).show();
 
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
